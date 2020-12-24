@@ -119,6 +119,7 @@ class BusInfo(WebAPI):
         route_to_subroute = {}
 
         # prepare data
+        print(sub_response)
         for _route in sub_response:
             for sub_route in _route['SubRoutes']:
                 subroute_to_dir[sub_route['SubRouteID']
