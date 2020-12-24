@@ -4,7 +4,6 @@
 
 目前市面上的交通工具動態 APP 大多以單一交通工具為主，但在生活上常常會遇到需要轉乘的情況發生，故希望能設計一個聊天機器人，串接[公共運輸整合資訊流通服務平臺](https://ptx.transportdata.tw/PTX/) API，並統整常見的交通工具時刻表來幫助我們更快速的規劃行程。
 
----
 
 ## 功能
 
@@ -62,20 +61,17 @@
 * 提供時間表，並顯示該車是否有剩餘座位可訂購
     * ![](https://i.imgur.com/N3G5hbT.png)
 
----
 
 ## 使用說明
 
 * 輸入 `reset` 返回到開頭選單
 * 依據指示文字回傳訊息
 
----
 
 ## Finite State Machine
 
 ![](https://i.imgur.com/btBMubG.png)
 
----
 
 ## Try it!
 
