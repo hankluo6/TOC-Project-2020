@@ -5,30 +5,120 @@ from flask import Flask, jsonify, request, abort, send_file
 from dotenv import load_dotenv
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 
 from fsm import TocMachine
-from utils import send_text_message
 
 load_dotenv()
 
-
 machine = TocMachine(
-    states=["user", "state1", "state2"],
+    states=["user", "start",
+            "bus_start", "bus_by_stop", "bus_by_stop2", "bus_by_route", "bus_by_route2", "bus_direction", "bus_end",
+            "train_start", "train_start_station", "train_end_station", "train_time",
+            "hsr_start", "hsr_start_station", "hsr_end_station", "hsr_time"
+            ],
     transitions=[
         {
             "trigger": "advance",
             "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
+            "dest": "start",
+            "conditions": "is_going_to_start",
         },
         {
             "trigger": "advance",
-            "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
+            "source": "start",
+            "dest": "bus_start",
+            "conditions": "is_going_to_bus_start",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {
+            "trigger": "advance",
+            "source": "bus_start",
+            "dest": "bus_by_stop",
+            "conditions": "going_bus_by_stop",
+        },
+        {
+            "trigger": "advance",
+            "source": "bus_by_stop",
+            "dest": "bus_by_stop2",
+            "conditions": "going_bus_by_stop2",
+        },
+        {
+            "trigger": "advance",
+            "source": "bus_start",
+            "dest": "bus_by_route",
+            "conditions": "goint_bus_by_route",
+        },
+        {
+            "trigger": "advance",
+            "source": "bus_by_route",
+            "dest": "bus_by_route2",
+            "conditions": "goint_bus_by_route2",
+        },
+        {
+            "trigger": "advance",
+            "source": ["bus_by_route2", "bus_by_stop2"],
+            "dest": "bus_direction",
+            "conditions": "going_bus_direction",
+        },
+        {
+            "trigger": "advance",
+            "source": "bus_direction",
+            "dest": "bus_end",
+            "conditions": "is_going_to_bus_end",
+        },
+        {
+            "trigger": "advance",
+            "source": "start",
+            "dest": "train_start",
+            "conditions": "is_going_to_train",
+        },
+        {
+            "trigger": "advance",
+            "source": "train_start",
+            "dest": "train_start_station",
+            "conditions": "going_train_start_station",
+        },
+        {
+            "trigger": "advance",
+            "source": "train_start_station",
+            "dest": "train_end_station",
+            "conditions": "going_train_end_station",
+        },
+        {
+            "trigger": "advance",
+            "source": "train_end_station",
+            "dest": "train_time",
+            "conditions": "going_train_time",
+        },
+        {
+            "trigger": "advance",
+            "source": "start",
+            "dest": "hsr_start",
+            "conditions": "is_going_to_hsr",
+        },
+        {
+            "trigger": "advance",
+            "source": "hsr_start",
+            "dest": "hsr_start_station",
+            "conditions": "going_hsr_start_station",
+        },
+        {
+            "trigger": "advance",
+            "source": "hsr_start_station",
+            "dest": "hsr_end_station",
+            "conditions": "going_hsr_end_station",
+        },
+        {
+            "trigger": "advance",
+            "source": "hsr_end_station",
+            "dest": "hsr_time",
+            "conditions": "going_hsr_time",
+        },
+        {
+            "trigger": "reset",
+            "source": "*",
+            "dest": "user",
+        },
     ],
     initial="user",
     auto_transitions=False,
@@ -36,7 +126,6 @@ machine = TocMachine(
 )
 
 app = Flask(__name__, static_url_path="")
-
 
 # get channel_secret and channel_access_token from your environment variable
 channel_secret = os.getenv("LINE_CHANNEL_SECRET", None)
@@ -94,17 +183,12 @@ def webhook_handler():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
-        if not isinstance(event, MessageEvent):
-            continue
-        if not isinstance(event.message, TextMessage):
-            continue
-        if not isinstance(event.message.text, str):
-            continue
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
-        response = machine.advance(event)
-        if response == False:
-            send_text_message(event.reply_token, "Not Entering any State")
+        if event.type == 'message' and event.message.type == 'text' and event.message.text == 'reset':
+            machine.reset()
+        else:
+            machine.advance(event)
 
     return "OK"
 
