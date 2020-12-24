@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0aae01739c77756cf76805f80b1315efe6888bcbb10d576ade9b2c2057648c40"
+            "sha256": "d5d5598f7114397798335080cb9f22bb797e3ec3225b2b6ff92d70328e2541e3"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -125,6 +125,14 @@
             ],
             "index": "pypi",
             "version": "==1.1.1"
+        },
+        "natsort": {
+            "hashes": [
+                "sha256:161dfaa30a820a4a274d4eab1f693300990a1be05ae5724af0cc6d3b530fc979",
+                "sha256:33f3f1003e2af4b4df20908fe62aa029999d136b966463746942efbfc821add3"
+            ],
+            "index": "pypi",
+            "version": "==7.1.0"
         },
         "pygraphviz": {
             "hashes": [
