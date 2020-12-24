@@ -26,16 +26,16 @@
 
 * 以站牌搜尋
     
-    列出可以到達輸入站牌的路線以供選擇
-    ![](https://i.imgur.com/1Ie2Dxa.png)
+    * 列出可以到達輸入站牌的路線以供選擇
+    * ![](https://i.imgur.com/1Ie2Dxa.png)
 * 以路線搜尋
 
-    列出輸入路線可到達的所有站牌以供選擇
-    ![](https://i.imgur.com/C1KYu7r.png)
+    * 列出輸入路線可到達的所有站牌以供選擇
+    * ![](https://i.imgur.com/C1KYu7r.png)
 
 * 輸入欲查詢的方向
 
-    ![](https://i.imgur.com/gyRbiru.png)
+    * ![](https://i.imgur.com/gyRbiru.png)
 
 * 列出該路線時刻表資料，搜尋的站牌會顯示在中間，方便查看前站及後站的時間情形
 
@@ -43,24 +43,24 @@
 
 
 * 輸入起訖站
-    ![](https://i.imgur.com/ONiOt1f.png)
+    * ![](https://i.imgur.com/ONiOt1f.png)
 
 * 選擇時間
-    ![](https://i.imgur.com/tJx6PWw.png)
+    * ![](https://i.imgur.com/tJx6PWw.png)
 
 * 提供視覺化結果，狀態欄位顯示該列車的誤點情形
-    ![](https://i.imgur.com/RWvMiIA.png)
+    * ![](https://i.imgur.com/RWvMiIA.png)
 
 ### 高鐵
 
 * 輸入起訖站
-    ![](https://i.imgur.com/xE9xrEL.png)
+    * ![](https://i.imgur.com/xE9xrEL.png)
 
 * 選擇時間
-    ![](https://i.imgur.com/KUkrpqS.png)
+    * ![](https://i.imgur.com/KUkrpqS.png)
 
 * 提供時間表，並顯示該車是否有剩餘座位可訂購
-    ![](https://i.imgur.com/N3G5hbT.png)
+    * ![](https://i.imgur.com/N3G5hbT.png)
 
 ---
 
