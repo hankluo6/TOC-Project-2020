@@ -349,7 +349,7 @@ class TocMachine(GraphMachine):
                 copy_template['header']['contents'][0]['contents'][0]['contents'][1]['text'] = self.user.hsr_start_station
                 copy_template['header']['contents'][0]['contents'][1]['contents'][1]['text'] = self.user.hsr_end_station
                 copy_template['header']['contents'][1][
-                    'contents'][0]['text'] = f'車號 {t[2]}'
+                    'contents'][0]['text'] = f'{t[2]}'
                 available = self.hsr_info.available_seats(
                     t[2], t[3], self.user.hsr_date, self.user.hsr_start_station)
                 if not available:
