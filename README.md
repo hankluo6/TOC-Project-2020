@@ -61,7 +61,7 @@
     * ![](https://i.imgur.com/KUkrpqS.png)
 
 * 提供時間表，並顯示該車是否有剩餘座位可訂購
-    * ![](https://i.imgur.com/N3G5hbT.png)
+    * ![](https://i.imgur.com/A72BYKY.png)
 
 
 ## 使用說明
