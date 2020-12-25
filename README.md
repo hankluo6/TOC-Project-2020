@@ -1,159 +1,80 @@
 # TOC Project 2020
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/dc7fa47fcd809b99d087/maintainability)](https://codeclimate.com/github/NCKU-CCS/TOC-Project-2020/maintainability)
+## 前言
 
-[![Known Vulnerabilities](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020/badge.svg)](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020)
-
-
-Template Code for TOC Project 2020
-
-A Line bot based on a finite state machine
-
-More details in the [Slides](https://hackmd.io/@TTW/ToC-2019-Project#) and [FAQ](https://hackmd.io/s/B1Xw7E8kN)
-
-## Setup
-
-### Prerequisite
-* Python 3.6
-* Pipenv
-* Facebook Page and App
-* HTTPS Server
-
-#### Install Dependency
-```sh
-pip3 install pipenv
-
-pipenv --three
-
-pipenv install
-
-pipenv shell
-```
-
-* pygraphviz (For visualizing Finite State Machine)
-    * [Setup pygraphviz on Ubuntu](http://www.jianshu.com/p/a3da7ecc5303)
-	* [Note: macOS Install error](https://github.com/pygraphviz/pygraphviz/issues/100)
+目前市面上的交通工具動態 APP 大多以單一交通工具為主，但在生活上常常會遇到需要轉乘的情況發生，故希望能設計一個聊天機器人，串接[公共運輸整合資訊流通服務平臺](https://ptx.transportdata.tw/PTX/) API，並統整常見的交通工具時刻表來幫助我們更快速的規劃行程。
 
 
-#### Secret Data
-You should generate a `.env` file to set Environment Variables refer to our `.env.sample`.
-`LINE_CHANNEL_SECRET` and `LINE_CHANNEL_ACCESS_TOKEN` **MUST** be set to proper values.
-Otherwise, you might not be able to run your code.
+## 功能
 
-#### Run Locally
-You can either setup https server or using `ngrok` as a proxy.
+* 輸入任意文字啟動，並支援三種常用大眾運輸工具
 
-#### a. Ngrok installation
-* [ macOS, Windows, Linux](https://ngrok.com/download)
+    ![](https://i.imgur.com/9lHM8Lb.png)
 
-or you can use Homebrew (MAC)
-```sh
-brew cask install ngrok
-```
+* 分別有以下功能
+    * 公車動態
+    * 台鐵時刻表
+    * 高鐵時刻表
 
-**`ngrok` would be used in the following instruction**
 
-```sh
-ngrok http 8000
-```
+### 公車
 
-After that, `ngrok` would generate a https URL.
+![](https://i.imgur.com/fezfZs8.png)
 
-#### Run the sever
+提供兩種方法搜尋公車，支援台南地區所有公車站
 
-```sh
-python3 app.py
-```
+* 以站牌搜尋
+    
+    * 列出可以到達輸入站牌的路線以供選擇
+    * ![](https://i.imgur.com/1Ie2Dxa.png)
+* 以路線搜尋
 
-#### b. Servo
+    * 列出輸入路線可到達的所有站牌以供選擇
+    * ![](https://i.imgur.com/C1KYu7r.png)
 
-Or You can use [servo](http://serveo.net/) to expose local servers to the internet.
+* 輸入欲查詢的方向
+
+    * ![](https://i.imgur.com/gyRbiru.png)
+
+* 列出該路線時刻表資料，搜尋的站牌會顯示在中間，方便查看前站及後站的時間情形
+
+    * ![](https://i.imgur.com/glXqCmV.png)
+
+### 火車
+
+
+* 輸入起訖站
+    * ![](https://i.imgur.com/ONiOt1f.png)
+
+* 選擇時間
+    * ![](https://i.imgur.com/tJx6PWw.png)
+
+* 提供視覺化結果，狀態欄位顯示該列車的誤點情形
+    * ![](https://i.imgur.com/RWvMiIA.png)
+
+### 高鐵
+
+* 輸入起訖站
+    * ![](https://i.imgur.com/xE9xrEL.png)
+
+* 選擇時間
+    * ![](https://i.imgur.com/KUkrpqS.png)
+
+* 提供時間表，並顯示該車是否有剩餘座位可訂購
+    * ![](https://i.imgur.com/A72BYKY.png)
+
+
+## 使用說明
+
+* 輸入 `reset` 返回到開頭選單
+* 依據指示文字回傳訊息
 
 
 ## Finite State Machine
-![fsm](./img/show-fsm.png)
 
-## Usage
-The initial state is set to `user`.
+![](https://i.imgur.com/btBMubG.png)
 
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
 
-* user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
+## Try it!
 
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
-
-## Deploy
-Setting to deploy webhooks on Heroku.
-
-### Heroku CLI installation
-
-* [macOS, Windows](https://devcenter.heroku.com/articles/heroku-cli)
-
-or you can use Homebrew (MAC)
-```sh
-brew tap heroku/brew && brew install heroku
-```
-
-or you can use Snap (Ubuntu 16+)
-```sh
-sudo snap install --classic heroku
-```
-
-### Connect to Heroku
-
-1. Register Heroku: https://signup.heroku.com
-
-2. Create Heroku project from website
-
-3. CLI Login
-
-	`heroku login`
-
-### Upload project to Heroku
-
-1. Add local project to Heroku project
-
-	heroku git:remote -a {HEROKU_APP_NAME}
-
-2. Upload project
-
-	```
-	git add .
-	git commit -m "Add code"
-	git push -f heroku master
-	```
-
-3. Set Environment - Line Messaging API Secret Keys
-
-	```
-	heroku config:set LINE_CHANNEL_SECRET=your_line_channel_secret
-	heroku config:set LINE_CHANNEL_ACCESS_TOKEN=your_line_channel_access_token
-	```
-
-4. Your Project is now running on Heroku!
-
-	url: `{HEROKU_APP_NAME}.herokuapp.com/callback`
-
-	debug command: `heroku logs --tail --app {HEROKU_APP_NAME}`
-
-5. If fail with `pygraphviz` install errors
-
-	run commands below can solve the problems
-	```
-	heroku buildpacks:set heroku/python
-	heroku buildpacks:add --index 1 heroku-community/apt
-	```
-
-	refference: https://hackmd.io/@ccw/B1Xw7E8kN?type=view#Q2-如何在-Heroku-使用-pygraphviz
-
-## Reference
-[Pipenv](https://medium.com/@chihsuan/pipenv-更簡單-更快速的-python-套件管理工具-135a47e504f4) ❤️ [@chihsuan](https://github.com/chihsuan)
-
-[TOC-Project-2019](https://github.com/winonecheng/TOC-Project-2019) ❤️ [@winonecheng](https://github.com/winonecheng)
-
-Flask Architecture ❤️ [@Sirius207](https://github.com/Sirius207)
-
-[Line line-bot-sdk-python](https://github.com/line/line-bot-sdk-python/tree/master/examples/flask-echo)
+![](https://i.imgur.com/YpyUbmN.png)
